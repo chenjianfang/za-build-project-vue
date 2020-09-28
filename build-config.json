@@ -1,0 +1,17 @@
+{
+    "sourcemapName": "zhenaicom.template",
+    "alias": {},
+    "outputPath": "dist",
+    "dev": {
+        "host": "localhost",
+        "port": "8080",
+        "proxyTable": {
+        },
+        "devtool": "source-map",
+        "publicPath": "/"
+    },
+    "build": {
+        "devtool": "nosources-source-map",
+        "publicPath": "//i.zhenai.com/m/portal/register/"
+    }
+}
