@@ -1,6 +1,6 @@
 {
     "name": "@za-build/project-vue",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "vue构建脚手架",
     "scripts": {
         "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --disable-host-check --config build/webpack.dev.conf.js",
@@ -20,6 +20,10 @@
     ],
     "author": "ZAFE",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chenjianfang/za-build-project-vue"
+    },
     "files": [
         "bin",
         "build",
