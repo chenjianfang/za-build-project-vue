@@ -1,6 +1,6 @@
 {
     "name": "@za-build/project-vue",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "vue构建脚手架",
     "scripts": {
         "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --disable-host-check --config build/webpack.dev.conf.js",
@@ -28,7 +28,6 @@
         "bin",
         "build",
         "config",
-        "src",
         ".gitignore",
         ".postcssrc.js",
         "babel.config.json",
