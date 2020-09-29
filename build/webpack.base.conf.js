@@ -3,15 +3,12 @@ var webpack = require('webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const core = require('./core');
 const utils = require('./utils');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const vueLoaderConfig = require('./vue-loader.conf');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
-        alias: {
-            '@': core.resolve('src')
-        }
+        alias: utils.getBuildConfig('alias')
     },
     module: {
         rules: [

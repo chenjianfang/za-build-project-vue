@@ -1,7 +1,5 @@
 const path = require('path');
 
-const cwd = process.cwd();
-
 // cmd命令行的参数 形式为: --page=index,auth
 const argsMap = {};
 const filterArg = (name = '') => {
@@ -23,11 +21,7 @@ const filterArg = (name = '') => {
 
 exports.filterArg = filterArg;
 
-
-function resolve(dir) {
-    return path.join(__dirname, '..', dir);
-}
-exports.resolve = resolve;
+const cwd = filterArg('cwd') || process.cwd();
 
 exports.cwdPath = function cwdPath(dir="") {
     return path.join(cwd, dir)

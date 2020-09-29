@@ -1,6 +1,6 @@
 /* 生产构建 --page=值 值只能有一个页面 */
 'use strict';
-const { filterArg, resolve } = require('./core');
+const { filterArg } = require('./core');
 const utils = require('./utils');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
