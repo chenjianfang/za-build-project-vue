@@ -197,3 +197,12 @@ exports.getConfigCwdPath = function (key) {
     }
     return core.cwdPath(buildDir);
 };
+
+// 获取 build-config 对象形式的路径，如alias
+exports.getObjectCwdPath = function (key) {
+    const obj = {};
+    Object.entries(exports.getBuildConfig(key)).forEach(([key, value]) => {
+        obj[key] = core.cwdPath(value);
+    });
+    return obj;
+};

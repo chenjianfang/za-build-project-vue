@@ -3,7 +3,7 @@
 
 ## Installation
 ```
-npm install @za-build/project-vue --save-dev
+npm install --save-dev @za-build/project-vue
 ```
 
 ## Usage
