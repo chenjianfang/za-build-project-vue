@@ -28,7 +28,7 @@ Object.entries(argsMap).forEach(([key, value]) => {
 
 const log = console.log;
 buildPagesList.forEach((page) => {
-    exec(`npm run prod --page=${page} ${otherArgv.join(' ')}`, {maxBuffer: 1024 * 1024 * 10}, function(err, stdout, stderr){
+    exec(`npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`, {maxBuffer: 1024 * 1024 * 10}, function(err, stdout, stderr){
         if(stderr){
             log('stderr: ');
             log(stderr);
