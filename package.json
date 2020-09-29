@@ -1,6 +1,6 @@
 {
     "name": "@za-build/project-vue",
-    "version": "0.0.6",
+    "version": "0.0.9",
     "description": "vue构建脚手架",
     "scripts": {
         "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --disable-host-check --config build/webpack.dev.conf.js",
@@ -35,7 +35,8 @@
         "package.json",
         "readme.md"
     ],
-    "devDependencies": {
+    "dependencies": {
+        "@babel/runtime": "^7.11.2",
         "@babel/core": "^7.11.1",
         "@babel/plugin-transform-runtime": "^7.11.5",
         "@babel/preset-env": "^7.11.5",
@@ -77,9 +78,8 @@
         "webpack-manifest-plugin": "^2.2.0",
         "webpack-merge": "^4.1.2"
     },
-    "dependencies": {
+    "peerDependencies": {
         "vue": "2.5.21",
-        "@babel/runtime": "^7.11.2",
         "core-js": "^3.6.5"
     },
     "browserslist": [
