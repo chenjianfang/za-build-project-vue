@@ -1,7 +1,7 @@
 #!/bin/bash
 CONID='zafe'
 CONKEY='zafezafe'
-buildConfigFile='build-config.json'
+buildConfigFile='build.config.json'
 
 cd "$(dirname $0)/../" || exit
 

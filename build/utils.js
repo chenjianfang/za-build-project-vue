@@ -184,7 +184,7 @@ exports.createManifest = function(buildPage) {
 let buildConfig;
 exports.getBuildConfig = function (key) {
     if (buildConfig) return buildConfig[key];
-    buildConfig = fs.readFileSync(core.cwdPath('./build-config.json'), 'utf8');
+    buildConfig = fs.readFileSync(core.cwdPath('./build.config.json'), 'utf8');
     buildConfig = JSON.parse(buildConfig);
     return buildConfig[key];
 };
