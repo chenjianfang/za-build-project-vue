@@ -41,7 +41,7 @@ fi
 
 echo "new tag: $resultTag"
 
-git tag -a $resultTag -m "register tag $resultTag"
+git tag -a $resultTag -m "tag $resultTag"
 expect -c "spawn git push origin $resultTag; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
 
 mkdir -p /data/web/codeview/files/$sourcemapName/$resultTag

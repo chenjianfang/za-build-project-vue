@@ -11,7 +11,8 @@
     },
     "bin": {
         "za-dev-vue": "./bin/dev.js",
-        "za-prod-vue": "./bin/prod.js"
+        "za-prod-vue": "./bin/prod.js",
+        "za-eject-vue": "./bin/eject.js"
     },
     "keywords": [
         "vue",
