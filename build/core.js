@@ -29,6 +29,6 @@ function resolve(dir) {
 }
 exports.resolve = resolve;
 
-exports.cwdPath = function cwdPath(dir) {
+exports.cwdPath = function cwdPath(dir="") {
     return path.join(cwd, dir)
 };

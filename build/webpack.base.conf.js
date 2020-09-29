@@ -1,7 +1,10 @@
 'use strict';
 var webpack = require('webpack');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const core = require('./core');
 const utils = require('./utils');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const vueLoaderConfig = require('./vue-loader.conf');
 
 module.exports = {
     resolve: {
@@ -13,6 +16,10 @@ module.exports = {
     module: {
         rules: [
             ...utils.styleLoaders({ sourceMap: false, usePostCSS: true }),
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -41,6 +48,12 @@ module.exports = {
     },
     plugins: [
         ...utils.createHtmlPackPlugins(),
+        new VueLoaderPlugin(),
+        new ESLintPlugin({
+            context: core.cwdPath(),
+            files: ['src'],
+            extensions: ['vue', 'js']
+        }),
         new webpack.optimize.ModuleConcatenationPlugin(),
     ]
 };
