@@ -1,13 +1,13 @@
 {
     "name": "@za-build/project-vue",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "vue构建脚手架",
     "scripts": {
         "dev": "webpack-dev-server --inline --progress --host 0.0.0.0 --disable-host-check --config build/webpack.dev.conf.js",
         "prod": "cross-env NODE_ENV=production webpack --process --color --config build/webpack.prod.conf.js",
         "analyzer": "webpack --config ./build/webpack.prod.conf.js --profile --json > stats.json && webpack-bundle-analyzer stats.json -m static",
-        "lint": "eslint --ext .js --ignore-path .eslintignore .",
-        "lint-fix": "eslint --fix --ext .js src"
+        "lint": "eslint --ext .js,.vue src",
+        "lintfix": "eslint --fix --ext .js,.vue src"
     },
     "bin": {
         "za-dev-vue": "./bin/dev.js",
@@ -35,7 +35,7 @@
         "package.json",
         "readme.md"
     ],
-    "dependencies": {
+    "devDependencies": {
         "@babel/runtime": "^7.11.2",
         "@babel/core": "^7.11.1",
         "@babel/plugin-transform-runtime": "^7.11.5",
