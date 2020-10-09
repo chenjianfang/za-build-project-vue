@@ -12,6 +12,13 @@ const projectFolder = path.join(cwd);
 shell.cp('-Rf', resolve('../build'), `${projectFolder}/`);
 shell.cp('-Rf', resolve('../config'), `${projectFolder}/`);
 
-fs.writeFile(path.join(cwd, 'eject.txt'), '1', function (err) {
+
+const packageFile = path.join(cwd, 'package.json');
+
+let packageConfig = fs.readFileSync(packageFile, 'utf8');
+packageConfig = JSON.parse(packageConfig);
+packageConfig.zaEject = true;
+
+fs.writeFile(packageFile, JSON.stringify(packageConfig,null,4), 'utf8', function (err) {
     if (err) console.error(err);
 });

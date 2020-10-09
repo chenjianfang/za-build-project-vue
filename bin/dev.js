@@ -12,8 +12,10 @@ const buildPath = resolve('../');
 
 let entryPath = buildPath;
 try {
-    const ejectStr = fs.readFileSync(path.join(cwd, 'eject.txt'), 'utf8');
-    if (ejectStr === '1') {
+    const packageFile = path.join(cwd, 'package.json');
+    let packageConfig = fs.readFileSync(packageFile, 'utf8');
+    packageConfig = JSON.parse(packageConfig);
+    if (packageConfig.zaEject === true) {
         entryPath = cwd;
     }
 } catch (e) {
