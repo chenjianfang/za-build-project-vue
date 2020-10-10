@@ -127,7 +127,7 @@ exports.createEntries = function () {
     let entryObject = {};
     if (dirArray.length > 0) {
         dirArray.forEach(page => {
-            let entryPath = core.cwdPath(`/src/pages/${page}/index.js`);
+            let entryPath = core.cwdPath(`/src/pages/${page}/${exports.getBuildConfig('entryPage')}`);
             if (fs.existsSync(entryPath)) {
                 entryObject[page] = entryPath;
             } else {

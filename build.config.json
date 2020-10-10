@@ -1,6 +1,7 @@
 {
     "sourcemapName": "zhenaicom.template",
     "alias": {},
+    "entryPage": "index.js",
     "outputPath": "dist",
     "eslintSwitch": false,
     "dev": {
