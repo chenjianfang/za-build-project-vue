@@ -5,6 +5,15 @@ const core = require('./core');
 const utils = require('./utils');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+const extraPlugins = [];
+if (utils.getBuildConfig('eslintSwitch')) {
+    extraPlugins.push(new ESLintPlugin({
+        context: core.cwdPath(),
+        files: ['src'],
+        extensions: ['vue', 'js']
+    }));
+}
+
 module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
@@ -46,11 +55,7 @@ module.exports = {
     plugins: [
         ...utils.createHtmlPackPlugins(),
         new VueLoaderPlugin(),
-        new ESLintPlugin({
-            context: core.cwdPath(),
-            files: ['src'],
-            extensions: ['vue', 'js']
-        }),
         new webpack.optimize.ModuleConcatenationPlugin(),
+        ...extraPlugins,
     ]
 };

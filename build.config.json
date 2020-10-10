@@ -2,6 +2,7 @@
     "sourcemapName": "zhenaicom.template",
     "alias": {},
     "outputPath": "dist",
+    "eslintSwitch": false,
     "dev": {
         "host": "localhost",
         "port": "8080",
