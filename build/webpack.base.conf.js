@@ -19,8 +19,8 @@ const copyStatic = utils.getBuildConfig('copyStatic');
 if (copyStatic && copyStatic.from) {
     extraPlugins.push(
         new CopyWebpackPlugin([{
-            from: utils.getConfigCwdPath(copyStatic.from),
-            to: utils.getConfigCwdPath(copyStatic.to),
+            from: core.cwdPath(copyStatic.from),
+            to: core.cwdPath(copyStatic.to),
         }])
     );
 }
