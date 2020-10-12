@@ -1,9 +1,10 @@
 'use strict';
 var webpack = require('webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const core = require('./core');
 const utils = require('./utils');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const extraPlugins = [];
 if (utils.getBuildConfig('eslintSwitch')) {
@@ -12,6 +13,16 @@ if (utils.getBuildConfig('eslintSwitch')) {
         files: ['src'],
         extensions: ['vue', 'js']
     }));
+}
+
+const copyStatic = utils.getBuildConfig('copyStatic');
+if (copyStatic && copyStatic.from) {
+    extraPlugins.push(
+        new CopyWebpackPlugin([{
+            from: utils.getConfigCwdPath(copyStatic.from),
+            to: utils.getConfigCwdPath(copyStatic.to),
+        }])
+    );
 }
 
 module.exports = {
