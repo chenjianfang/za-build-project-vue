@@ -1,5 +1,6 @@
 /* 生产构建 --page=值 值只能有一个页面 */
-'use strict';
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { filterArg } = require('./core');
 const utils = require('./utils');
 const webpack = require('webpack');
@@ -33,15 +34,27 @@ const webpackConfig = merge(baseWebpackConfig, {
         publicPath: `${utils.getBuildConfig("build").publicPath}${buildPage}/`,
         filename: 'js/[name].[contenthash].js',
     },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserJSPlugin(), // 最小化js
+            new OptimizeCSSAssetsPlugin({}), // 最小化css
+        ],
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    chunks: "all"
+                },
+            },
+        }
+    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': require('../config/prod.env'),
         }),
-        new webpack.HashedModuleIdsPlugin({
-            hashFunction: 'sha256',
-            hashDigest: 'hex',
-            hashDigestLength: 20
-        }),
+        new webpack.HashedModuleIdsPlugin(),
 
         new MiniCssExtractPlugin({
           filename: 'css/[name].[contenthash].css',
@@ -50,6 +63,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         new webpack.optimize.ModuleConcatenationPlugin(),
 
         new CleanWebpackPlugin(),
+
         ...pluginExtra
     ]
 });
