@@ -19,8 +19,8 @@ if (sourcemap) {
     pluginExtra.push(utils.createManifest(buildPage));
 }
 
-const buildPageList = utils.getPages();
-if (!buildPageList.includes(buildPage)) {
+const pageEntryDir = utils.getPages();
+if (!Object.keys(pageEntryDir).includes(buildPage)) {
     return console.log(`编译页面${buildPage}不存在`);
 }
 console.log('buildPage: ', buildPage);

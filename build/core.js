@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 
 // cmd命令行的参数 形式为: --page=index,auth
@@ -25,4 +26,15 @@ const cwd = filterArg('cwd') || process.cwd();
 
 exports.cwdPath = function cwdPath(dir="") {
     return path.join(cwd, dir)
+};
+
+
+exports.checkFileExistsSync = function checkFileExistsSync(filepath){
+    let flag = true;
+    try{
+        fs.accessSync(filepath, fs.constants.F_OK);
+    }catch(e){
+        flag = false;
+    }
+    return flag;
 };

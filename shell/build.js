@@ -17,8 +17,8 @@ process.argv.slice(2).forEach((args) => {
 
 
 // 获取构建页面
-const buildPagesList = utils.getPages();
-console.log('构建的页面: ', buildPagesList);
+const pageEntryDir = utils.getPages();
+console.log('构建的页面: ', pageEntryDir);
 
 delete argsMap.page;
 let otherArgv = [];
@@ -27,19 +27,19 @@ Object.entries(argsMap).forEach(([key, value]) => {
 });
 
 const log = console.log;
-buildPagesList.forEach((page) => {
+Object.keys(pageEntryDir).forEach((page) => {
     exec(`npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`, {maxBuffer: 1024 * 1024 * 10}, function(err, stdout, stderr){
         if(stderr){
             log('stderr: ');
             log(stderr);
             log(err);
-            return
+            return;
         }
         if(err){
             log('Error: ');
             log(err);
-            return
+            return;
         }
         log(stdout);
-    })
+    });
 });

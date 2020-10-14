@@ -98,24 +98,45 @@ exports.createNotifierCallback = function () {
 /*
 * 需要编译的页面，通过 --page判断，如果--page无则默认为'src/pages'
 * */
-let pagesList = [];
+let cachePageEntry = {};
 function getPages() {
-    if (!pagesList.length) {
-        const pageName = core.filterArg('page');
-        let dirs = fs.readdirSync(core.cwdPath('src/pages'));
-        let pages = dirs.filter(item => item !== '.DS_Store');
-        let pageEntry = [];
-        if (pageName && pageName !== 'all') {
-            pageEntry = pageName.split(',').filter((item) => {
-                return pages.includes(item);
+    if (Object.keys(cachePageEntry).length) return cachePageEntry;
+    let pageEntryAll = {};
+    let pageEntry = {};
+    const pageName = core.filterArg('page');
+    const pagesPath = core.cwdPath('src/pages');
+    let dirs = fs.readdirSync(pagesPath);
+    let pages = dirs.filter(item => item !== '.DS_Store');
+
+    pages.forEach((page) => {
+        pageEntryAll[page] = path.join(pagesPath, page);
+
+        let deepPagesList = [];
+        const deepPagesPath = core.cwdPath(`src/pages/${page}/_pages/`);
+        const deepPagesStatus = core.checkFileExistsSync(deepPagesPath);
+        if (deepPagesStatus) {
+            deepPagesList = fs.readdirSync(deepPagesPath);
+            deepPagesList = deepPagesList.filter(item => item !== '.DS_Store');
+            deepPagesList.forEach((dp) => {
+                pageEntryAll[`${page}/${dp}`] = path.join(deepPagesPath, dp);
             });
         }
-        if (pageEntry.length) {
-            pages = pageEntry;
-        }
-        pagesList = pages;
+    });
+
+    if (pageName && pageName !== 'all') {
+        const pageKeys = Object.keys(pageEntryAll);
+        pageName.split(',').forEach((item) => {
+            if (pageKeys.includes(item)) {
+                pageEntry[item] = pageEntryAll[item];
+            }
+        });
     }
-    return pagesList;
+
+    if (!Object.keys(pageEntry).length) {
+        pageEntry = pageEntryAll;
+    }
+    cachePageEntry = pageEntry;
+    return pageEntry;
 }
 exports.getPages = getPages;
 
@@ -123,51 +144,45 @@ exports.getPages = getPages;
  * 初始化入口文件
  */
 exports.createEntries = function () {
-    var dirArray = getPages();
+    var pageEntryDir = getPages();
     let entryObject = {};
-    if (dirArray.length > 0) {
-        dirArray.forEach(page => {
-            let entryPath = core.cwdPath(`/src/pages/${page}/${exports.getBuildConfig('entryPage')}`);
-            if (fs.existsSync(entryPath)) {
-                entryObject[page] = entryPath;
-            } else {
-                console.log(chalk.red(`警告：入口文件${entryPath}不存在 `));
-            }
-        });
-    }
+    Object.entries(pageEntryDir).forEach(([key, value]) => {
+        const entryFile = path.join(value, exports.getBuildConfig('entryPage'));
+        if (fs.existsSync(entryFile)) {
+            entryObject[key] = entryFile;
+        } else {
+            console.log(chalk.red(`警告：入口文件${entryFile}不存在 `));
+        }
+    });
     console.log(entryObject);
     return entryObject;
 };
 
 exports.createHtmlPackPlugins = function () {
-    var dirArray = getPages();
+    var pageEntryDir = getPages();
     let htmlPluginArray = [];
-    if (dirArray.length > 0) {
-        dirArray.forEach(page => {
-            let templateFile = core.cwdPath(`src/pages/${page}/index.ejs`);
-            let targetPath = `${exports.getConfigCwdPath('outputPath')}/${page}/index.html`;
-            if (fs.existsSync(templateFile)) {
-                htmlPluginArray.push(new HtmlWebpackPlugin({
-                    chunks: [page],
-                    filename: targetPath,
-                    template: templateFile,
-                    inject: true,
-                    minify: {
-                        removeComments: process.env.NODE_ENV === 'production',
-                        collapseWhitespace: process.env.NODE_ENV === 'production',
-                        removeAttributeQuotes: false,
-                    },
-                    env: process.env.NODE_ENV
-                }));
-            } else {
-                console.log(chalk.red(`警告：模板文件${templateFile}不存在 \n `));
-                // throw new Error('模板文件不存在');
-            }
-        });
-        return htmlPluginArray;
-    } else {
-        chalk.red('pages 目录不存在');
-    }
+
+    Object.entries(pageEntryDir).forEach(([key, value]) => {
+        const templateFile = path.join(value, 'index.ejs');
+        const targetPath = `${exports.getConfigCwdPath('outputPath')}/${key}/index.html`;
+        if (fs.existsSync(templateFile)) {
+            htmlPluginArray.push(new HtmlWebpackPlugin({
+                chunks: [key],
+                filename: targetPath,
+                template: templateFile,
+                inject: true,
+                minify: {
+                    removeComments: process.env.NODE_ENV === 'production',
+                    collapseWhitespace: process.env.NODE_ENV === 'production',
+                    removeAttributeQuotes: false,
+                },
+                env: process.env.NODE_ENV
+            }));
+        } else {
+            console.log(chalk.red(`警告：模板文件${templateFile}不存在 \n `));
+        }
+    });
+    return htmlPluginArray;
 };
 
 exports.createManifest = function(buildPage) {
