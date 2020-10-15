@@ -54,4 +54,4 @@ exports.stepRunner = function stepRunner(list, fn) {
         runner();
     }
     runner();
-}
+};
