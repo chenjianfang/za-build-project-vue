@@ -4,10 +4,12 @@
     "entryPage": "index.js",
     "outputPath": "dist",
     "eslintSwitch": false,
-    "copyStatic": {
-        "from": "",
-        "to": ""
-    },
+    "copyStatic": [
+        {
+            "from": "",
+            "to": ""
+        }
+    ],
     "dev": {
         "host": "localhost",
         "port": "8080",

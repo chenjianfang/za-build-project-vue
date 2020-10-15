@@ -19,4 +19,4 @@ fi
 expect -c "spawn git pull --no-edit origin ${branch}; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
 yarn install;
 
-node ./build/build.js "$buildParams"
+npx za-build-vue "$buildParams"

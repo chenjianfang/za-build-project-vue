@@ -5,7 +5,13 @@ const path = require('path');
 const argsMap = {};
 const filterArg = (name = '') => {
     if (Object.keys(argsMap).length === 0) {
-        const argv = JSON.parse(process.env.npm_config_argv).original.slice(2);
+        let argv;
+        if (process.env.npm_config_argv) {
+            argv = JSON.parse(process.env.npm_config_argv).original.slice(2);
+        } else {
+            argv = process.argv.slice(2);
+        }
+
         argv.forEach((item) => {
             if (/^--/.test(item)) {
                 const argItem = item.slice(2);
