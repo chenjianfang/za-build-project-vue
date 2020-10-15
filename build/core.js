@@ -44,3 +44,14 @@ exports.checkFileExistsSync = function checkFileExistsSync(filepath){
     }
     return flag;
 };
+
+exports.stepRunner = function stepRunner(list, fn) {
+    const taskList = JSON.parse(JSON.stringify(list));
+    async function runner() {
+        if (!taskList.length) return;
+        const item = taskList.shift();
+        await fn(item);
+        runner();
+    }
+    runner();
+}
