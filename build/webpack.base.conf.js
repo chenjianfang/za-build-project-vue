@@ -2,6 +2,7 @@
 var webpack = require('webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const core = require('./core');
 const utils = require('./utils');
 
@@ -12,6 +13,16 @@ if (utils.getBuildConfig('eslintSwitch')) {
         files: ['src'],
         extensions: ['vue', 'js']
     }));
+}
+
+const copyStatic = utils.getBuildConfig('copyStatic');
+if (copyStatic && copyStatic.from) {
+    extraPlugins.push(
+        new CopyWebpackPlugin([{
+            from: core.cwdPath(copyStatic.from),
+            to: core.cwdPath(copyStatic.to),
+        }])
+    );
 }
 
 module.exports = {
