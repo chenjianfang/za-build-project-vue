@@ -40,19 +40,20 @@ Object.entries(argsMap).forEach(([key, value]) => {
 });
 
 core.stepRunner(Object.keys(pageEntryDir), (page) => {
-    log(`运行：npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`);
-    exec(`npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`, {maxBuffer: 1024 * 1024 * 10}, function(err, stdout, stderr){
-        if(stderr){
-            log('stderr: ');
-            log(stderr);
-            log(err);
-            return;
-        }
-        if(err){
-            log('Error: ');
-            log(err);
-            return;
-        }
-        log(stdout);
+    return new Promise((resolve) => {
+        log(`运行：npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`);
+        exec(`npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`, {maxBuffer: 1024 * 1024 * 10}, function(err, stdout, stderr){
+            if(stderr){
+                log('stderr: ');
+                log(stderr);
+                log(err);
+            }
+            if(err){
+                log('Error: ');
+                log(err);
+            }
+            log(stdout);
+        });
+        resolve();
     });
 });
