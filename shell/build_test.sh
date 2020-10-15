@@ -17,6 +17,6 @@ then
   git rev-parse --quiet --verify $branch && git checkout $branch || git checkout -b $branch;
 fi
 expect -c "spawn git pull --no-edit origin ${branch}; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
-yarn install;
+npm install;
 
 npx za-build-vue "$buildParams"
