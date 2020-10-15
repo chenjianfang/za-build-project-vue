@@ -53,7 +53,7 @@ core.stepRunner(Object.keys(pageEntryDir), (page) => {
                 log(err);
             }
             log(stdout);
+            resolve();
         });
-        resolve();
     });
 });
