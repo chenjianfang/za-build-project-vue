@@ -109,8 +109,6 @@ function getPages() {
     let pages = dirs.filter(item => item !== '.DS_Store');
 
     pages.forEach((page) => {
-        pageEntryAll[page] = path.join(pagesPath, page);
-
         let deepPagesList = [];
         const deepPagesPath = core.cwdPath(`src/pages/${page}/_pages/`);
         const deepPagesStatus = core.checkFileExistsSync(deepPagesPath);
@@ -120,6 +118,8 @@ function getPages() {
             deepPagesList.forEach((dp) => {
                 pageEntryAll[`${page}/${dp}`] = path.join(deepPagesPath, dp);
             });
+        } else {
+            pageEntryAll[page] = path.join(pagesPath, page);
         }
     });
 
