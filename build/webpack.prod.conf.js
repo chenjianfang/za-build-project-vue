@@ -45,8 +45,9 @@ const webpackConfig = merge(baseWebpackConfig, {
             cacheGroups: {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
+                    filename: "js/[name].[contenthash].js",
                     name: "vendors",
-                    chunks: "all"
+                    chunks: "initial"
                 },
             },
         }
