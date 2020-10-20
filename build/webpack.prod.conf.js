@@ -1,5 +1,5 @@
 /* 生产构建 --page=值 值只能有一个页面 */
-const TerserJSPlugin = require('terser-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { filterArg } = require('./core');
 const utils = require('./utils');
@@ -38,7 +38,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     optimization: {
         minimize: true,
         minimizer: [
-            new TerserJSPlugin(), // 最小化js
+            new UglifyJsPlugin(), // 最小化js
             new OptimizeCSSAssetsPlugin({}), // 最小化css
         ],
         splitChunks: {
@@ -46,7 +46,13 @@ const webpackConfig = merge(baseWebpackConfig, {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     filename: "js/[name].[contenthash].js",
-                    name: "vendors",
+                    name(module) {
+                        const moduleFileName = module.identifier().split('/').reduceRight(item => item);
+                        if (/.js$/.test(moduleFileName)) {
+                            return 'vendors';
+                        }
+                        return false;
+                    },
                     chunks: "initial"
                 },
             },
