@@ -167,7 +167,7 @@ exports.createHtmlPackPlugins = function () {
         const targetPath = `${exports.getConfigCwdPath('outputPath')}/${key}/index.html`;
         if (fs.existsSync(templateFile)) {
             htmlPluginArray.push(new HtmlWebpackPlugin({
-                chunks: [key],
+                chunks: [key, 'vendors'],
                 filename: targetPath,
                 template: templateFile,
                 inject: true,
