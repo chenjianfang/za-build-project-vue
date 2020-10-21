@@ -38,7 +38,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     optimization: {
         minimize: true,
         minimizer: [
-            new UglifyJsPlugin(), // 最小化js
+            new UglifyJsPlugin({
+                sourceMap: Boolean(sourcemap)
+            }), // 最小化js
             new OptimizeCSSAssetsPlugin({}), // 最小化css
         ],
         splitChunks: {
@@ -67,8 +69,6 @@ const webpackConfig = merge(baseWebpackConfig, {
         new MiniCssExtractPlugin({
           filename: `css/${name}.[contenthash].css`,
         }),
-
-        new webpack.optimize.ModuleConcatenationPlugin(),
 
         new CleanWebpackPlugin(),
 
