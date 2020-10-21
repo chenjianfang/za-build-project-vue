@@ -14,9 +14,10 @@ cd "$(dirname $0)/../" || exit
 git checkout .
 if [ $branch ]
 then
+  expect -c "spawn git pull --no-edit origin ${branch}; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
   git rev-parse --quiet --verify $branch && git checkout $branch || git checkout -b $branch;
-fi
-expect -c "spawn git pull --no-edit origin ${branch}; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
-npm install;
 
-npx za-build-vue "$buildParams"
+  expect -c "spawn git pull --no-edit origin ${branch}; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
+  npm install;
+  npx za-build-vue "$buildParams"
+fi

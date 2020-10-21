@@ -11,6 +11,9 @@ fi
 
 sourcemapName=$(cat $buildConfigFile | awk -F "[:]" '/sourcemapName/{print$2}' | awk -F "[,]" '{print$1}' | sed 's/\"//g' | sed -e 's/^[ ]*//g' | sed -e 's/[ ]*$//g')
 
+branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+expect -c "spawn git pull --no-edit origin ${branch}; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
+
 tagStr=`git tag -l`
 # 切割成数组
 OLD_IFS="$IFS"
