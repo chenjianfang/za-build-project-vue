@@ -1,18 +1,21 @@
 'use strict';
 var webpack = require('webpack');
-const ESLintPlugin = require('eslint-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const core = require('./core');
 const utils = require('./utils');
 
+const extraLoader = [];
 const extraPlugins = [];
 if (utils.getBuildConfig('eslintSwitch')) {
-    extraPlugins.push(new ESLintPlugin({
-        context: core.cwdPath(),
-        files: ['src'],
-        extensions: ['vue', 'js']
-    }));
+    extraLoader.push(
+        {
+            enforce: 'pre',
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'eslint-loader',
+        }
+    )
 }
 
 const copyStatic = utils.getBuildConfig('copyStatic');
@@ -33,6 +36,7 @@ module.exports = {
     module: {
         rules: [
             ...utils.styleLoaders({ sourceMap: false, usePostCSS: true }),
+            ...extraLoader,
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
