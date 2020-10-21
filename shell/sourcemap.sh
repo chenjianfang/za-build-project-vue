@@ -47,5 +47,5 @@ echo "new tag: $resultTag"
 git tag -a $resultTag -m "tag $resultTag"
 expect -c "spawn git push origin $resultTag; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
 
-mkdir -p /data/web/codeview/files/$sourcemapName/$resultTag
-rsync -avz dist/ /data/web/codeview/files/$sourcemapName/$resultTag
+#mkdir -p /data/web/codeview/files/$sourcemapName/$resultTag
+#rsync -avz dist/ /data/web/codeview/files/$sourcemapName/$resultTag
