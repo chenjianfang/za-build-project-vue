@@ -1,5 +1,5 @@
 /* 生产构建 --page=值 值只能有一个页面 */
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { filterArg } = require('./core');
 const utils = require('./utils');
@@ -38,8 +38,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     optimization: {
         minimize: true,
         minimizer: [
-            new UglifyJsPlugin({
-                sourceMap: Boolean(sourcemap)
+            new TerserPlugin({
+                test: /\.js(\?.*)?$/i,
             }), // 最小化js
             new OptimizeCSSAssetsPlugin({}), // 最小化css
         ],

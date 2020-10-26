@@ -1,7 +1,6 @@
 'use strict';
 var webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const core = require('./core');
 const utils = require('./utils');
 
@@ -16,16 +15,6 @@ if (utils.getBuildConfig('eslintSwitch')) {
             loader: 'eslint-loader',
         }
     )
-}
-
-const copyStatic = utils.getBuildConfig('copyStatic');
-if (copyStatic && copyStatic.from) {
-    extraPlugins.push(
-        new CopyWebpackPlugin([{
-            from: core.cwdPath(copyStatic.from),
-            to: core.cwdPath(copyStatic.to),
-        }])
-    );
 }
 
 module.exports = {

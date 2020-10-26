@@ -21,11 +21,16 @@ process.argv.slice(2).forEach((args) => {
 });
 
 // 当没有page参数并且有static参数，则只做拷贝
-if (!argsMap.page && argsMap.static) {
+if (argsMap.static) {
     utils.getBuildConfig('copyStatic').forEach(({ from, to }) => {
         shell.cp('-Rf', core.cwdPath(from), core.cwdPath(to));
         log(`拷贝静态文件成功：${from} ---> ${to}`);
     });
+    delete argsMap.static;
+}
+
+if (!argsMap.page) {
+    log('请输入页面');
     return;
 }
 

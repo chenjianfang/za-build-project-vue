@@ -2,9 +2,20 @@
 const merge = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const portfinder = require('portfinder');
-const utils = require('./utils');
 const webpack = require('webpack');
+const shell = require('shelljs');
+const utils = require('./utils');
+const core = require('./core');
 const baseWebpackConfig = require('./webpack.base.conf');
+
+const copyStatic = utils.getBuildConfig('copyStatic');
+
+copyStatic.forEach(({ from, to }) => {
+    if (from.trim()) {
+        shell.cp('-Rf', core.cwdPath(from), core.cwdPath(to));
+        console.log(`拷贝静态文件成功：${from} ---> ${to}`);
+    }
+});
 
 const devWebpackConfig = merge(baseWebpackConfig, {
     mode: "development",
