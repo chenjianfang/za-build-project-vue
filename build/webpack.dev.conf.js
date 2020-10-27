@@ -27,6 +27,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     devtool: utils.getBuildConfig('dev').devtool,
     devServer: {
+        contentBase: [
+            core.cwdPath('dist')
+        ],
         clientLogLevel: 'warning',
         historyApiFallback: true,
         hot: true,

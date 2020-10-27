@@ -7,11 +7,16 @@ const utils = require('./utils');
 const extraLoader = [];
 const extraPlugins = [];
 if (utils.getBuildConfig('eslintSwitch')) {
+    const eslintignore = [
+        'node_modules',
+        utils.getBuildConfig('eslintignore')
+    ];
+    const eslintignoreReg = new RegExp(eslintignore.join('|'));
     extraLoader.push(
         {
             enforce: 'pre',
             test: /\.js$/,
-            exclude: /node_modules/,
+            exclude: eslintignoreReg,
             loader: 'eslint-loader',
         }
     )

@@ -4,6 +4,9 @@
     "entryPage": "index.js",
     "outputPath": "dist",
     "eslintSwitch": false,
+    "eslintignore": [
+        "dist"
+    ],
     "copyStatic": [
         {
             "from": "",
