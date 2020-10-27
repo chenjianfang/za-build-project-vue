@@ -9,7 +9,7 @@ const extraPlugins = [];
 if (utils.getBuildConfig('eslintSwitch')) {
     const eslintignore = [
         'node_modules',
-        utils.getBuildConfig('eslintignore')
+        ...utils.getBuildConfig('eslintignore')
     ];
     const eslintignoreReg = new RegExp(eslintignore.join('|'));
     extraLoader.push(
