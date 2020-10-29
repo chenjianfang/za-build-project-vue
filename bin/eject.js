@@ -11,6 +11,7 @@ console.log('cwd: ', cwd);
 const projectFolder = path.join(cwd);
 shell.cp('-Rf', resolve('../build'), `${projectFolder}/`);
 shell.cp('-Rf', resolve('../config'), `${projectFolder}/`);
+shell.cp('-Rf', resolve('../shell'), `${projectFolder}/`);
 
 
 const packageFile = path.join(cwd, 'package.json');
