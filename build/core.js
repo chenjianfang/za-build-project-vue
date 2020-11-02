@@ -9,7 +9,7 @@ const filterArg = (name = '') => {
         if (process.env.npm_config_argv) {
             argv = JSON.parse(process.env.npm_config_argv).original.slice(2);
         } else {
-            argv = process.argv.slice(2);
+            argv = process.argv.slice(2)[0].split(/\s+/);
         }
 
         argv.forEach((item) => {
