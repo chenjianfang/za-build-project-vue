@@ -20,13 +20,15 @@ process.argv.slice(2).forEach((args) => {
     });
 });
 
-// 当没有page参数并且有static参数，则只做拷贝
-if (argsMap.static) {
-    utils.getBuildConfig('copyStatic').forEach(({ from, to }) => {
-        shell.cp('-Rf', core.cwdPath(from), core.cwdPath(to));
-        log(`拷贝静态文件成功：${from} ---> ${to}`);
-    });
-    delete argsMap.static;
+// 拷贝静态文件
+utils.getBuildConfig('copyStatic').forEach(({ from, to }) => {
+    shell.cp('-Rf', core.cwdPath(from), core.cwdPath(to));
+    log(`拷贝静态文件成功：${from} ---> ${to}`);
+});
+delete argsMap.static;
+// 当没有page参数并且有static参数，则结束
+if (argsMap.static && !argsMap.page) {
+    return;
 }
 
 if (!argsMap.page) {
