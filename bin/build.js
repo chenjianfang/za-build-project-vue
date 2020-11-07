@@ -48,8 +48,8 @@ Object.entries(argsMap).forEach(([key, value]) => {
 
 core.stepRunner(Object.keys(pageEntryDir), (page) => {
     return new Promise((resolve) => {
-        log(`运行：npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`);
-        exec(`npx za-prod-vue --page=${page} ${otherArgv.join(' ')}`, {maxBuffer: 1024 * 1024 * 10}, function(err, stdout, stderr){
+        log(`运行：npx za-prod-react --page=${page} ${otherArgv.join(' ')}`);
+        exec(`npx za-prod-react --page=${page} ${otherArgv.join(' ')}`, {maxBuffer: 1024 * 1024 * 10}, function(err, stdout, stderr){
             if(stderr){
                 log('stderr: ');
                 log(stderr);

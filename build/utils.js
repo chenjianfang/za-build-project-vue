@@ -28,6 +28,8 @@ exports.cssLoaders = function (options) {
         }
     };
 
+    const cssModule = 'css-modules-typescript-loader';
+
     function generateLoaders(loader, loaderOptions) {
         const initCssLoader = [];
         if (process.env.NODE_ENV === 'production') {
@@ -35,7 +37,7 @@ exports.cssLoaders = function (options) {
         } else {
             initCssLoader.push('style-loader')
         }
-        initCssLoader.push(cssLoader);
+        initCssLoader.push(cssLoader, cssModule);
         if (options.usePostCSS) {
             initCssLoader.push(postcssLoader);
         }
@@ -50,19 +52,15 @@ exports.cssLoaders = function (options) {
         return initCssLoader;
     }
 
-    // https://vue-loader.vuejs.org/en/configurations/extract-css.html
     return {
         css: generateLoaders(),
         postcss: generateLoaders(),
         less: generateLoaders('less'),
         sass: generateLoaders('sass', {indentedSyntax: true}),
         scss: generateLoaders('sass'),
-        stylus: generateLoaders('stylus'),
-        styl: generateLoaders('stylus')
     };
 };
 
-// Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
     const output = [];
     const loaders = exports.cssLoaders(options);

@@ -19,5 +19,5 @@ then
 
   expect -c "spawn git pull --no-edit origin ${branch}; expect \"*Username*\" { send \"${CONID}\n\"; exp_continue } \"*Password*\" { send \"${CONKEY}\n\" };interact";
   npm install;
-  npx za-build-vue "$buildParams"
+  npx za-build-react "$buildParams"
 fi

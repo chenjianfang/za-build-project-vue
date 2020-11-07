@@ -1,7 +1,5 @@
 'use strict';
 var webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const core = require('./core');
 const utils = require('./utils');
 
 const extraLoader = [];
@@ -15,16 +13,16 @@ if (utils.getBuildConfig('eslintSwitch')) {
     extraLoader.push(
         {
             enforce: 'pre',
-            test: /\.js$/,
+            test: /\.tsx?$/,
             exclude: eslintignoreReg,
             loader: 'eslint-loader',
         }
-    )
+    );
 }
 
 module.exports = {
     resolve: {
-        extensions: ['.js', '.vue'],
+        extensions: ['.js', '.ts', '.tsx', '.json'],
         alias: utils.getObjectCwdPath('alias')
     },
     module: {
@@ -32,13 +30,14 @@ module.exports = {
             ...utils.styleLoaders({ sourceMap: false, usePostCSS: true }),
             ...extraLoader,
             {
-                test: /\.vue$/,
-                loader: 'vue-loader'
-            },
-            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
+            },
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                loader: 'awesome-typescript-loader',
             },
             {
                 test: /\.html$/,
@@ -70,7 +69,6 @@ module.exports = {
     },
     plugins: [
         ...utils.createHtmlPackPlugins(),
-        new VueLoaderPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
         ...extraPlugins,
     ]

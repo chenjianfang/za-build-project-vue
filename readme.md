@@ -1,9 +1,9 @@
 ## Introduction
-@za-build/project-vue是打包vue项目的构建配置
+@za-build/project-react是打包react项目的构建配置
 
 ## Installation
 ```
-npm install --save-dev @za-build/project-vue
+npm install --save-dev @za-build/project-react
 ```
 
 ## Usage

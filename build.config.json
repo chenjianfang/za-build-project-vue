@@ -1,7 +1,7 @@
 {
     "sourcemapName": "zhenaicom.template",
     "alias": {},
-    "entryPage": "index.js",
+    "entryPage": "index.tsx",
     "outputPath": "dist",
     "eslintSwitch": false,
     "eslintignore": [
@@ -23,6 +23,6 @@
     },
     "build": {
         "devtool": "nosources-source-map",
-        "publicPath": "//i.zhenai.com/m/portal/register/"
+        "publicPath": "/"
     }
 }
